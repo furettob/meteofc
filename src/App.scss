@@ -1,0 +1,1110 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap');
+
+.App {
+  text-align: center;
+  font-family: 'Open sans', arial;
+}
+
+$color-green: #27ae60;
+$color-orange: #f1c40f;
+$color-blue: #3498db;
+$color-violet: #9b59b6;
+
+.card-wrapper {
+  position: relative;
+  min-height: 480px;
+  perspective: 200vmin;
+}
+
+.card {
+  display: flex;
+  border-radius: 8px;
+  outline: 1px solid transparent;
+  text-align: center;
+  align-items: stretch;
+
+  &.fb-meteo &--side {
+    background-color: #6E7EAD;
+    background-image: url(/img/bg.png);
+    background-size: cover;
+    padding: 24px 8px;
+    box-sizing: border-box;
+  }
+
+  /* the flip effect */
+  &--side {
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 1vmin;
+    backface-visibility: hidden;
+    transition: transform 800ms cubic-bezier(.63,-0.32,.4,1.39);
+    -webkit-box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.4);
+    box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.4);
+    & .side--content {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  &--front {
+    transform: rotateY(0deg);
+    &--flip {
+      transform: rotateY(-180deg);
+    }
+  }
+  &--back {
+    transform: rotateY(180deg);
+    & .fb-map {
+      display: none;
+    }
+    &--flip {
+      transform: rotateY(0);
+      & .fb-map {
+        display: block;
+      }
+    }
+  }
+}
+
+.fb-meteo {
+  color: #fff;
+  & .fb-meteo-info-list {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 8px;
+  }
+  & .fb-meteo-info-item {
+    grid-column-start: auto;
+    grid-column-end: auto;
+    grid-row-start: auto;
+    grid-row-end: auto;
+  }
+}
+
+.fb-divider {
+  background-color: rgba(247,248,250,0.18);
+  height: 2px;
+  &__small {
+    height: 1px;
+  }
+}
+
+/************************************************************************/
+/* DESIGN SYSTEM
+/************************************************************************/
+
+body {
+  background-color: #ebeced;
+  font-family: sans-serif, Arial;
+}
+:focus {
+  outline: 0;
+}
+.fb-section {
+  margin: 0;
+  width: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+.fb-content {
+  max-width: 700px;
+  margin: auto;
+}
+
+/* REUSABLE CLASSES */
+.fb-hide-i {
+  display: none !important;
+  opacity:0;
+  height: 0;
+  width: 0;
+}
+
+@media screen and (max-width: 1280px) {
+  .fb-hide-lg-down, .fb-hide-lg-down * {
+    display: none;
+  }
+}
+@media screen and (max-width: 992px) {
+  .fb-hide-md-down, .fb-hide-md-down * {
+    display: none;
+  } 
+}
+@media screen and (max-width: 576px) {
+  .fb-hide-sm-down, .fb-hide-sm-down * {
+    display: none;
+  }
+}
+
+.fb-md-up-br:before {
+  content: ' ';
+  display: block;
+}
+.fb-md-down-br:before {
+  content: ' ';
+  display: inline;
+}
+@media screen and (max-width: 992px) {
+  .fb-md-up-br:before {
+    content: ' ';
+    display: inline;
+  }
+  .fb-md-down-br:before {
+    content: ' ';
+    display: block;
+  }
+}
+.fb-cta, a.fb-cta,
+a.fb-cta:visited,
+a.fb-cta:hover,
+a.fb-cta:focus,
+a.fb-cta:active {
+  color: #127fab;
+  font-weight: bold;
+}
+.fb-btn-primary, .fb-btn-alternate {
+  border-radius: 2px;
+}
+.fb-btn-primary {
+  border: 2px solid;
+  padding: 8px 16px;
+  text-align: center;
+  font-weight: bold;  
+}
+.fb-btn-blue {
+  background-color: transparent;
+  border-color: #127fab;
+  color: #127fab;
+}
+.fb-btn-blue:hover {
+  background-color: #127fab;
+  color: #fff
+}
+.fb-btn-green {
+  background-color: #458314;
+  border-color: #458314;
+  color: #fff;
+}
+.fb-btn-green:hover {
+  background-color: #458314;
+  color: #fff;
+}
+.fb-btn-orange {
+  background-color: transparent;
+  border-color: #f28e24;
+  color: #f28e24;
+}
+.fb-btn-orange:hover {
+  background-color: #f28e24;
+  color: #fff;
+}
+.fb-btn-red {
+  background-color: transparent;
+  border-color: #c74b36;
+  color: #c74b36;
+}
+.fb-btn-red:hover {
+  background-color: #c74b36;
+  color: #fff;
+}
+.fb-btn-abandonEvent {
+  background-color: transparent;
+  border-color: #458314;
+  color: #458314; 
+}
+.fb-btn-abandonEvent::before {
+  content: "You are in"
+}
+.fb-btn-abandonEvent:hover {
+  background-color: #c74b36;
+  border-color: #c74b36;
+  color: #fff; 
+}
+.fb-btn-abandonEvent:hover::before {
+  content: "Cancel"
+}
+.fb-btn-alternate {
+  background-color: transparent;
+  border-color: #0063ed;
+  color: #0063ed;
+}
+.fb-btn-extended {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+.fb-btn-extended60 {
+  min-width: 60%;
+  margin: auto;
+}
+
+/* COLORS */
+.fb-bg-blue {
+    background-color: #0063ed;
+}
+.fb-bs-blue {
+    border-style: solid;
+    border-color: #0063ed;
+}
+.fb-blue {
+    color: #0063ed;
+}
+.fb-bg-black {
+    background-color: #000;
+}
+.fb-black {
+    color: #000;
+}
+.fb-bg-white {
+    background-color: #fff;
+}
+.fb-white {
+    color: #fff;
+}
+.fb-bg-lightgray {
+    background-color: #ebeced;
+}
+.fb-lightgray {
+    color: #ebeced;
+}
+.fb-bg-gray-4 {
+    background-color: #444;
+}
+.fb-gray-4 {
+    color: #444;
+}
+.fb-bg-gray-7 {
+    background-color: #777;
+}
+.fb-gray-7 {
+    color: #777;
+}
+.fb-gray {
+  color: #909098
+}
+.fb-b-gray {
+  border-color: #909098
+}
+.fb-bg-gray {
+  background-color: #909098
+}
+.fb-bg-green {
+    background-color: #458314;
+}
+.fb-green {
+    color: #458314;
+}
+/* FONT */
+.fb-ff1 {
+    font-family: 'Open Sans', Source Sans Pro;
+}
+.fb-ff2 {
+    font-family: 'Montserrat','Open Sans',Source Sans Pro,sans-serif,Helvetica,Arial;
+}
+.fb-lh-10, .fb-lh-10 * {
+    line-height: 1;
+}
+.fb-lh-11 {
+    line-height: 1.1;
+}
+.fb-lh-12 {
+    line-height: 1.2;
+}
+.fb-fs-8, .fb-fs-r8 {
+    font-size: 8px;
+}
+.fb-fs-10, .fb-fs-r10 {
+    font-size: 10px;
+}
+.fb-fs-12, .fb-fs-r12 {
+    font-size: 12px;
+}
+.fb-fs-16, .fb-fs-r16 {
+    font-size: 16px;
+}
+.fb-fs-20, .fb-fs-r20 {
+    font-size: 20px;
+}
+.fb-fs-24, .fb-fs-r24 {
+    font-size: 24px;
+}
+.fb-fs-32, .fb-fs-r32 {
+    font-size: 32px;
+}
+.fb-fs-40, .fb-fs-r40 {
+    font-size: 40px;
+}
+.fb-fs-48, .fb-fs-r48 {
+    font-size: 48px;
+}
+.fb-fs-56, .fb-fs-r56 {
+    font-size: 56px;
+}
+.fb-fs-64, .fb-fs-r64 {
+    font-size: 64px;
+}
+.fb-fs-72, .fb-fs-r72 {
+    font-size: 72px;
+}
+.fb-fs-80, .fb-fs-r80 {
+    font-size: 80px;
+}
+.fb-fs-88, .fb-fs-r88 {
+    font-size: 88px;
+}
+.fb-fs-96, .fb-fs-r96 {
+    font-size: 96px;
+}
+.fb-fs-104, .fb-fs-r104 {
+    font-size: 104px;
+}
+.fb-fs-112, .fb-fs-r112 {
+    font-size: 112px;
+}
+.fb-fs-120, .fb-fs-r120 {
+    font-size: 120px;
+}
+.fb-fs-128, .fb-fs-r128 {
+    font-size: 128px;
+}
+.fb-fs-136, .fb-fs-r136 {
+    font-size: 136px;
+}
+.fb-fs-144, .fb-fs-r144 {
+    font-size: 144px;
+}
+
+.fb-emph0 {
+    font-weight: normal;
+    text-transform: none;
+    text-decoration: none;
+}
+.fb-emph1 {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.fb-emph-b {
+    font-weight: bold;
+}
+.fb-emph-up {
+    text-transform: uppercase;
+}
+.fb-emph-un {
+    text-decoration: underline;
+}
+
+/* POSITIONS */
+
+/* display / vertical alignment */
+.fb-va-tt {
+  vertical-align: text-top;
+}
+.fb-va-tb {
+  vertical-align: text-bottom;
+}
+
+.fb-f-l {
+    float: left; 
+}
+.fb-f-n {
+    float: none; 
+}
+.fb-f-r {
+    float: right; 
+}
+
+/* text-align */
+.fb-ta-l {
+    text-align: left; 
+}
+.fb-ta-r {
+    text-align: right; 
+}
+.fb-ta-c {
+    text-align: center; 
+}
+@media screen and (max-width: 576px) {
+ .fb-ta-c-sm-down {
+    text-align: center; 
+  } 
+}
+
+/* padding */
+.fb-p-0 {
+  padding: 0px;
+}
+.fb-pv-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.fb-ph-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.fb-pt-0 {
+  padding-top: 0px;
+}
+.fb-pb-0 {
+  padding-bottom: 0px;
+}
+.fb-pl-0 {
+  padding-left: 0px;
+}
+.fb-pr-0 {
+  padding-right: 0px;
+}
+
+.fb-p-8 {
+  padding: 8px;
+}
+.fb-pv-8 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.fb-ph-8 {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.fb-pt-8 {
+  padding-top: 8px;
+}
+.fb-pb-8 {
+  padding-bottom: 8px;
+}
+.fb-pl-8 {
+  padding-left: 8px;
+}
+.fb-pr-8 {
+  padding-right: 8px;
+}
+
+.fb-p-16 {
+  padding: 16px;
+}
+.fb-pv-16 {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.fb-ph-16 {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.fb-pt-16 {
+  padding-top: 16px;
+}
+.fb-pb-16 {
+  padding-bottom: 16px;
+}
+.fb-pl-16 {
+  padding-left: 16px;
+}
+.fb-pr-16 {
+  padding-right: 16px;
+}
+
+.fb-p-24 {
+  padding: 24px;
+}
+.fb-pv-24 {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+.fb-ph-24 {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.fb-pt-24 {
+  padding-top: 24px;
+}
+.fb-pb-24 {
+  padding-bottom: 24px;
+}
+.fb-pl-24 {
+  padding-left: 24px;
+}
+.fb-pr-24 {
+  padding-right: 24px;
+}
+
+.fb-p-32 {
+  padding: 32px;
+}
+.fb-pv-32 {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+.fb-ph-32 {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.fb-pt-32 {
+  padding-top: 32px;
+}
+.fb-pb-32 {
+  padding-bottom: 32px;
+}
+.fb-pl-32 {
+  padding-left: 32px;
+}
+.fb-pr-32 {
+  padding-right: 32px;
+}
+
+.fb-p-40 {
+  padding: 40px;
+}
+.fb-pv-40 {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.fb-ph-40 {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.fb-pt-40 {
+  padding-top: 40px;
+}
+.fb-pb-40 {
+  padding-bottom: 40px;
+}
+.fb-pl-40 {
+  padding-left: 40px;
+}
+.fb-pr-40 {
+  padding-right: 40px;
+}
+
+.fb-p-48 {
+  padding: 48px;
+}
+.fb-pv-48 {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+.fb-ph-48 {
+  padding-left: 48px;
+  padding-right: 48px;
+}
+.fb-pt-48 {
+  padding-top: 48px;
+}
+.fb-pb-48 {
+  padding-bottom: 48px;
+}
+.fb-pl-48 {
+  padding-left: 48px;
+}
+.fb-pr-48 {
+  padding-right: 48px;
+}
+
+.fb-p-56 {
+  padding: 56px;
+}
+.fb-pv-56 {
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+.fb-ph-56 {
+  padding-left: 56px;
+  padding-right: 56px;
+}
+.fb-pt-56 {
+  padding-top: 56px;
+}
+.fb-pb-56 {
+  padding-bottom: 56px;
+}
+.fb-pl-56 {
+  padding-left: 56px;
+}
+.fb-pr-56 {
+  padding-right: 56px;
+}
+
+.fb-p-64 {
+  padding: 64px;
+}
+.fb-pv-64 {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+.fb-ph-64 {
+  padding-left: 64px;
+  padding-right: 64px;
+}
+.fb-pt-64 {
+  padding-top: 64px;
+}
+.fb-pb-64 {
+  padding-bottom: 64px;
+}
+.fb-pl-64 {
+  padding-left: 64px;
+}
+.fb-pr-64 {
+  padding-right: 64px;
+}
+
+.fb-p-80 {
+  padding: 80px;
+}
+.fb-pv-80 {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+.fb-ph-80 {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+.fb-pt-80 {
+  padding-top: 80px;
+}
+.fb-pb-80 {
+  padding-bottom: 80px;
+}
+.fb-pl-80 {
+  padding-left: 80px;
+}
+.fb-pr-80 {
+  padding-right: 80px;
+}
+
+.fb-p-96 {
+  padding: 96px;
+}
+.fb-pv-96 {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+.fb-ph-96 {
+  padding-left: 96px;
+  padding-right: 96px;
+}
+.fb-pt-96 {
+  padding-top: 96px;
+}
+.fb-pb-96 {
+  padding-bottom: 96px;
+}
+.fb-pl-96 {
+  padding-left: 96px;
+}
+.fb-pr-96 {
+  padding-right: 96px;
+}
+
+.fb-p-120 {
+  padding: 120px;
+}
+.fb-pv-120 {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+.fb-ph-120 {
+  padding-left: 120px;
+  padding-right: 120px;
+}
+.fb-pt-120 {
+  padding-top: 120px;
+}
+.fb-pb-120 {
+  padding-bottom: 120px;
+}
+.fb-pl-120 {
+  padding-left: 120px;
+}
+.fb-pr-120 {
+  padding-right: 120px;
+}
+
+.fb-p-144 {
+  padding: 144px;
+}
+.fb-pv-144 {
+  padding-top: 144px;
+  padding-bottom: 144px;
+}
+.fb-ph-144 {
+  padding-left: 144px;
+  padding-right: 144px;
+}
+.fb-pt-144 {
+  padding-top: 144px;
+}
+.fb-pb-144 {
+  padding-bottom: 144px;
+}
+.fb-pl-144 {
+  padding-left: 144px;
+}
+.fb-pr-144 {
+  padding-right: 144px;
+}
+
+.fb-p-160 {
+  padding: 160px;
+}
+.fb-pv-160 {
+  padding-top: 160px;
+  padding-bottom: 160px;
+}
+.fb-ph-160 {
+  padding-left: 160px;
+  padding-right: 160px;
+}
+.fb-pt-160 {
+  padding-top: 160px;
+}
+.fb-pb-160 {
+  padding-bottom: 160px;
+}
+.fb-pl-160 {
+  padding-left: 160px;
+}
+.fb-pr-160 {
+  padding-right: 160px;
+}
+
+/* margin */
+.fb-m-0 {
+  margin: 0px;
+}
+.fb-mv-0 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.fb-mh-0 {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.fb-mb-0 {
+  margin-bottom: 0px;
+}
+.fb-mt-0 {
+  margin-top: 0px;
+}
+.fb-mr-0 {
+  margin-right: 0px;
+}
+.fb-ml-0 {
+  margin-left: 0px;
+}
+.fb-m-8 {
+  margin: 8px;
+}
+.fb-mv-8 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.fb-mh-8 {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.fb-mt-8 {
+  margin-top: 8px;
+}
+.fb-mb-8 {
+  margin-bottom: 8px;
+}
+.fb-ml-8 {
+  margin-left: 8px;
+}
+.fb-mr-8 {
+  margin-right: 8px;
+}
+
+.fb-m-16 {
+  margin: 16px;
+}
+.fb-mv-16 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.fb-mh-16 {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.fb-mt-16 {
+  margin-top: 16px;
+}
+.fb-mb-16 {
+  margin-bottom: 16px;
+}
+.fb-ml-16 {
+  margin-left: 16px;
+}
+.fb-mr-16 {
+  margin-right: 16px;
+}
+
+.fb-m-24 {
+  margin: 24px;
+}
+.fb-mv-24 {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+.fb-mh-24 {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+.fb-mt-24 {
+  margin-top: 24px;
+}
+.fb-mb-24 {
+  margin-bottom: 24px;
+}
+.fb-ml-24 {
+  margin-left: 24px;
+}
+.fb-mr-24 {
+  margin-right: 24px;
+}
+
+.fb-m-32 {
+  margin: 32px;
+}
+.fb-mv-32 {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+.fb-mh-32 {
+  margin-left: 32px;
+  margin-right: 32px;
+}
+.fb-mt-32 {
+  margin-top: 32px;
+}
+.fb-mb-32 {
+  margin-bottom: 32px;
+}
+.fb-ml-32 {
+  margin-left: 32px;
+}
+.fb-mr-32 {
+  margin-right: 32px;
+}
+
+.fb-m-40 {
+  margin: 40px;
+}
+.fb-mv-40 {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.fb-mh-40 {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.fb-mt-40 {
+  margin-top: 40px;
+}
+.fb-mb-40 {
+  margin-bottom: 40px;
+}
+.fb-ml-40 {
+  margin-left: 40px;
+}
+.fb-mr-40 {
+  margin-right: 40px;
+}
+
+.fb-m-48 {
+  margin: 48px;
+}
+.fb-mv-48 {
+  margin-top: 48px;
+  margin-bottom: 48px;
+}
+.fb-mh-48 {
+  margin-left: 48px;
+  margin-right: 48px;
+}
+.fb-mt-48 {
+  margin-top: 48px;
+}
+.fb-mb-48 {
+  margin-bottom: 48px;
+}
+.fb-ml-48 {
+  margin-left: 48px;
+}
+.fb-mr-48 {
+  margin-right: 48px;
+}
+
+.fb-m-56 {
+  margin: 56px;
+}
+.fb-mv-56 {
+  margin-top: 56px;
+  margin-bottom: 56px;
+}
+.fb-mh-56 {
+  margin-left: 56px;
+  margin-right: 56px;
+}
+.fb-mt-56 {
+  margin-top: 56px;
+}
+.fb-mb-56 {
+  margin-bottom: 56px;
+}
+.fb-ml-56 {
+  margin-left: 56px;
+}
+.fb-mr-56 {
+  margin-right: 56px;
+}
+
+.fb-m-64 {
+  margin: 64px;
+}
+.fb-mv-64 {
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+.fb-mh-64 {
+  margin-left: 64px;
+  margin-right: 64px;
+}
+.fb-mt-64 {
+  margin-top: 64px;
+}
+.fb-mb-64 {
+  margin-bottom: 64px;
+}
+.fb-ml-64 {
+  margin-left: 64px;
+}
+.fb-mr-64 {
+  margin-right: 64px;
+}
+
+.fb-m-80 {
+  margin: 80px;
+}
+.fb-mv-80 {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+.fb-mh-80 {
+  margin-left: 80px;
+  margin-right: 80px;
+}
+.fb-mt-80 {
+  margin-top: 80px;
+}
+.fb-mb-80 {
+  margin-bottom: 80px;
+}
+.fb-ml-80 {
+  margin-left: 80px;
+}
+.fb-mr-80 {
+  margin-right: 80px;
+}
+
+.fb-m-96 {
+  margin: 96px;
+}
+.fb-mv-96 {
+  margin-top: 96px;
+  margin-bottom: 96px;
+}
+.fb-mh-96 {
+  margin-left: 96px;
+  margin-right: 96px;
+}
+.fb-mt-96 {
+  margin-top: 96px;
+}
+.fb-mb-96 {
+  margin-bottom: 96px;
+}
+.fb-ml-96 {
+  margin-left: 96px;
+}
+.fb-mr-96 {
+  margin-right: 96px;
+}
+
+.fb-m-120 {
+  margin: 120px;
+}
+.fb-mv-120 {
+  margin-top: 120px;
+  margin-bottom: 120px;
+}
+.fb-mh-120 {
+  margin-left: 120px;
+  margin-right: 120px;
+}
+.fb-mt-120 {
+  margin-top: 120px;
+}
+.fb-mb-120 {
+  margin-bottom: 120px;
+}
+.fb-ml-120 {
+  margin-left: 120px;
+}
+.fb-mr-120 {
+  margin-right: 120px;
+}
+
+.fb-m-144 {
+  margin: 144px;
+}
+.fb-mv-144 {
+  margin-top: 144px;
+  margin-bottom: 144px;
+}
+.fb-mh-144 {
+  margin-left: 144px;
+  margin-right: 144px;
+}
+.fb-mt-144 {
+  margin-top: 144px;
+}
+.fb-mb-144 {
+  margin-bottom: 144px;
+}
+.fb-ml-144 {
+  margin-left: 144px;
+}
+.fb-mr-144 {
+  margin-right: 144px;
+}
+
+.fb-m-160 {
+  margin: 160px;
+}
+.fb-mv-160 {
+  margin-top: 160px;
+  margin-bottom: 160px;
+}
+.fb-mh-160 {
+  margin-left: 160px;
+  margin-right: 160px;
+}
+.fb-mt-160 {
+  margin-top: 160px;
+}
+.fb-mb-160 {
+  margin-bottom: 160px;
+}
+.fb-ml-160 {
+  margin-left: 160px;
+}
+.fb-mr-160 {
+  margin-right: 160px;
+}
+
+/* border */ 
+.fb-b-8 {
+  border-width: 8px;
+}
+
+/* DESIGN SYSTEM END */ 
