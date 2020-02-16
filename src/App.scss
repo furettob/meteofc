@@ -101,6 +101,7 @@ $color-violet: #9b59b6;
     }
   }
 }
+
 @media screen and (max-width: 576px) {
   .fb-meteo {
     & .fb-meteo-info-item {
@@ -132,6 +133,7 @@ $color-violet: #9b59b6;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 0;
+      align-items: center;
       &:not(:last-child) {
         border-bottom: 2px solid rgba(247,248,250,0.18);
       }
@@ -213,6 +215,22 @@ $color-violet: #9b59b6;
 
 .fb-error {
   margin: 24px auto;
+}
+.fb-loader {
+ margin: 24px auto;   
+}
+
+.fb-address {
+  & &--description {
+    font-size: 32px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .fb-address {
+    & &--description {
+      font-size: 16px;
+    }
+  }
 }
 
 /************************************************************************/

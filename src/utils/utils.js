@@ -14,30 +14,34 @@ export const getMeteoForecast = async (geolocation) => {
     return staticData
   }
 
-  const url =
-  `https://api.weatherbit.io/v2.0/forecast/daily?lat=${geolocation.latitude}&lon=${geolocation.longitude}&lang=${config.language}&key=${config.weatherbit_api_key}`
+  if (geolocation.latitude && geolocation.longitude) {
+    const url =
+    `https://api.weatherbit.io/v2.0/forecast/daily?lat=${geolocation.latitude}&lon=${geolocation.longitude}&lang=${config.language}&key=${config.weatherbit_api_key}`
 
-  const weatherbitParams = {
-      method: "get",
-      url: url
-  }
-
-  console.log("I'd ask for url:" + url)
-
-  // Uncomment following lines to use real API from weatherbit
-  let weatherbitReturn = await axios(weatherbitParams)
-  // TODO clean data before sending
-  return weatherbitReturn
-
-  // Uncomment following lines to use mock static data
-  /*
-    async function fakeWeatherbitData() {
-      console.log("fakeWeatherbitData")
-      let weatherbitReturn = await simulateAsync()
-      return weatherbitReturn
+    const weatherbitParams = {
+        method: "get",
+        url: url
     }
-    return await fakeWeatherbitData()
-  */
+
+    console.log("getMeteoForecast asking for url:" + url)
+
+    // Uncomment following lines to use real API from weatherbit
+    let weatherbitReturn = await axios(weatherbitParams)
+    // TODO clean data before sending
+    return weatherbitReturn
+
+    // Uncomment following lines to use mock static data
+    /*
+      async function fakeWeatherbitData() {
+        console.log("fakeWeatherbitData")
+        let weatherbitReturn = await simulateAsync()
+        return weatherbitReturn
+      }
+      return await fakeWeatherbitData()
+    */
+  } else {
+    return undefined
+  }
   
 }
 
@@ -116,8 +120,8 @@ export const checkSignificantMeteoPositionChange = (stored, received) => {
         console.log("Meteoweek no new received position: returning false")
         return false
       }
-      if (!stored) {
-        console.log("Meteoweek no stored position: returning true")
+      if (!stored && getGeolocationProperty(received, "latitude") && getGeolocationProperty(received, "longitude")) {
+        console.log("Meteoweek no stored position and consistent received position: returning true")
         return true
       }
       const storedLatitude = getGeolocationProperty(stored, "latitude")
@@ -130,11 +134,10 @@ export const checkSignificantMeteoPositionChange = (stored, received) => {
           (storedLatitude !== latitude || storedLongitude !== longitude)
       ) {
         console.log("Meteoweek significant change: returning true")
-        console.log("Meteoweek STORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
+        console.log("Meteoweek if\nSTORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
         return true
       } else {
-        console.log("Meteoweek ELSE---")
-        console.log("Meteoweek STORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
+        console.log("Meteoweek else\nSTORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
       }
   } catch (e) {
     console.log("Meteoweek Error: returning true ", e)

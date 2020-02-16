@@ -33,8 +33,8 @@ const useGeolocation = () => {
         console.log("no new received position: returning false")
         return false
       }
-      if (!stored) {
-        console.log("no stored position: returning true")
+      if (!stored && getGeolocationProperty(received, "latitude") && getGeolocationProperty(received, "longitude")) {
+        console.log("no stored position and consistent received position: returning true")
         return true
       }
       const storedLatitude = getGeolocationProperty(stored, "latitude")

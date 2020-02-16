@@ -1,7 +1,8 @@
 {
 	"lang":"en",
-	"weatherbit_api_key":"3fdb223e958b4e05899f90fcd7ca3d43",
-	"weatherbit_api_key_old_1":"a67878c69b7144b3a21729753360d4a9",
+	"weatherbit_api_key":"a606127705084e24ac6bf077ed712fb7",
+	"weatherbit_api_key_old_1":"3fdb223e958b4e05899f90fcd7ca3d43",
+	"weatherbit_api_key_old_3":"a67878c69b7144b3a21729753360d4a9",
 	"weatherbit_api_key_old_2":"6e11c035291846769d06e14eff26c32b",
 	"gm_api_key":"AIzaSyAMBKNxrjL8tD1y4QvZd_sFBc3AsX9RKAE",
 	"reverseGeocodeApikey": "d94661a934d54021ab2480dba731a305"

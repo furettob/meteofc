@@ -34,11 +34,15 @@ class MeteoWeek extends Component {
 		    try {
 		    	const weatherbitReturn = await getMeteoForecast(this.props.geolocation)
 				this.setState({meteoForecast: weatherbitReturn, geolocation:this.props.geolocation, error:null})
+		    	console.log("Weatherbit - ok")
 		    } catch(e) {
 		    	const msg = e.message || "Generic error with weatherbit"
+		    	console.log("Weatherbit - error " + msg)
 		    	this.setState({error: "An error occurred with weatherbit API:" + msg})
 		    }  
-		} 
+		} else {
+			console.log("Weatherbit - not called -")
+		}
 	}
 
 	meteoInfoSmallClicked = (index) => {
