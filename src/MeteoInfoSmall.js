@@ -2,20 +2,14 @@ import React, {Component} from 'react';
 import axios from 'axios'
 import {getMeteoIconFilename} from './utils/utils'
 
-const INITIAL_STATE = {
-	selectedClass: ""
-}
-
-class MeteoInfoBig extends Component {
-	constructor(props) {
-		super(props)
-		const selectedClass = this.props.selected === true ? "selected" : ""
-		this.state = Object.assign({ ...INITIAL_STATE}, {selectedClass: selectedClass})
+const MeteoInfoSmall = (props) => {
+	const getSelectedClass = () => {
+		return props.selected === true ? " selected " : ""
 	}
 
-	getMeteoText = () => {
+	const getMeteoText = () => {
 		try {
-			return this.props.data.weather.description
+			return props.data.weather.description
 		} catch (e) {
 			console.log("error retrieving meteoText: ", e)
 			return "---"
@@ -23,9 +17,9 @@ class MeteoInfoBig extends Component {
 		return "---"
 	}
 
-	getMeteoCode = () => {
+	const getMeteoCode = () => {
 		try {
-			return this.props.data.weather.code
+			return props.data.weather.code
 		} catch (e) {
 			console.log("error retrieving meteoCode: ", e)
 			return "---"
@@ -33,9 +27,9 @@ class MeteoInfoBig extends Component {
 		return undefined
 	}
 
-	getMeteoTemp = () => {
+	const getMeteoTemp = () => {
 		try {
-			return this.props.data.temp + "°"
+			return props.data.temp + "°"
 		} catch (e) {
 			console.log("error retrieving meteoCode: ", e)
 			return undefined
@@ -43,9 +37,9 @@ class MeteoInfoBig extends Component {
 		return undefined
 	}
 
-	getMeteoMinTemp = () => {
+	const getMeteoMinTemp = () => {
 		try {
-			return this.props.data.min_temp.toFixed(0) + "°"
+			return props.data.min_temp.toFixed(0) + "°"
 		} catch (e) {
 			console.log("error retrieving meteoCode: ", e)
 			return undefined
@@ -53,9 +47,9 @@ class MeteoInfoBig extends Component {
 		return undefined
 	}
 
-	getMeteoMaxTemp = () => {
+	const getMeteoMaxTemp = () => {
 		try {
-			return this.props.data.max_temp.toFixed(0) + "°"
+			return props.data.max_temp.toFixed(0) + "°"
 		} catch (e) {
 			console.log("error retrieving meteoCode: ", e)
 			return undefined
@@ -63,9 +57,9 @@ class MeteoInfoBig extends Component {
 		return undefined
 	}
 
-	getMeteoDay = () => {
+	const getMeteoDay = () => {
 		try {
-			let day_timestamp = this.props.data.ts
+			let day_timestamp = props.data.ts
 			if (day_timestamp < 9999999999) {
 				day_timestamp *= 1000;
 			}
@@ -78,19 +72,13 @@ class MeteoInfoBig extends Component {
 		return undefined
 	}
 
-	meteoInfoClicked = () => {
-		//this.props.onClickHandler(this.props.index, "ciao")
-	}
-
-	render() {
-		return (
-			<div className={"fb-meteo-info-item fb-meteo-info--small " + this.state.selectedClass} onClick={ () => { this.props.onClickHandler(this.props.index, "ciao") }}>
-				<p>{this.getMeteoDay()}</p>
-				<img className="fb-meteo-info--small__icon" src={"./img/"+getMeteoIconFilename(this.getMeteoCode())}/>
-				<p>{this.getMeteoMinTemp()} - {this.getMeteoMaxTemp()}</p>
+	return (
+			<div className={"fb-meteo-info-item fb-meteo-info--small " + getSelectedClass()} onClick={ () => { props.onClickHandler(props.index, "ciao") }}>
+				<p>{getMeteoDay()}</p>
+				<img className="fb-meteo-info--small__icon" src={"./img/"+getMeteoIconFilename(getMeteoCode())}/>
+				<p>{getMeteoMinTemp()} - {getMeteoMaxTemp()}</p>
 			</div>
 		)
-	}
 }
 
-export default MeteoInfoBig
+export default MeteoInfoSmall

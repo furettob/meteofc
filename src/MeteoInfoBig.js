@@ -2,18 +2,11 @@ import React, {Component} from 'react';
 import axios from 'axios'
 import {getMeteoIconFilename} from './utils/utils'
 
-const INITIAL_STATE = {
-}
+const MeteoInfoBig = (props) => {
 
-class MeteoInfoBig extends Component {
-	constructor(props) {
-		super(props)
-		this.state = { ...INITIAL_STATE }
-	}
-
-	getMeteoText = () => {
+	const getMeteoText = () => {
 		try {
-			return this.props.data.weather.description
+			return props.data.weather.description
 		} catch (e) {
 			console.log("error retrieving meteoText: ", e)
 			return "---"
@@ -21,9 +14,9 @@ class MeteoInfoBig extends Component {
 		return "---"
 	}
 
-	getMeteoCode = () => {
+	const getMeteoCode = () => {
 		try {
-			return this.props.data.weather.code
+			return props.data.weather.code
 		} catch (e) {
 			console.log("error retrieving meteoCode: ", e)
 			return "---"
@@ -31,9 +24,9 @@ class MeteoInfoBig extends Component {
 		return undefined
 	}
 
-	getMeteoTemp = () => {
+	const getMeteoTemp = () => {
 		try {
-			return this.props.data.temp + "°"
+			return props.data.temp + "°"
 		} catch (e) {
 			console.log("error retrieving meteoCode: ", e)
 			return undefined
@@ -41,9 +34,9 @@ class MeteoInfoBig extends Component {
 		return undefined
 	}
 
-	getMeteoApparentTemp = () => {
+	const getMeteoApparentTemp = () => {
 		try {
-			return "Feels like: " + this.props.data.app_min_temp + "°"
+			return "Feels like: " + props.data.app_min_temp + "°"
 		} catch (e) {
 			console.log("error retrieving meteoCode: ", e)
 			return undefined
@@ -51,9 +44,9 @@ class MeteoInfoBig extends Component {
 		return undefined
 	}
 
-	getMeteoHumidity = () => {
+	const getMeteoHumidity = () => {
 		try {
-			return "Humidity: " + this.props.data.rh + "%"
+			return "Humidity: " + props.data.rh + "%"
 		} catch (e) {
 			console.log("error retrieving meteoCode: ", e)
 			return undefined
@@ -61,16 +54,14 @@ class MeteoInfoBig extends Component {
 		return undefined
 	}
 
-	render() {
-		return (
+	return (
 			<div className="fb-meteo-info--big">
-				<img className="fb-meteo-info--big__icon" src={"./img/"+getMeteoIconFilename(this.getMeteoCode())}/>
-				<h2>{this.getMeteoTemp()}</h2>
-				<p>{this.getMeteoText()}</p>
-				<p>{this.getMeteoApparentTemp()} - {this.getMeteoHumidity()}</p>
+				<img className="fb-meteo-info--big__icon" src={"./img/"+getMeteoIconFilename(getMeteoCode())}/>
+				<h2>{getMeteoTemp()}</h2>
+				<p>{getMeteoText()}</p>
+				<p>{getMeteoApparentTemp()} - {getMeteoHumidity()}</p>
 			</div>
 		)
-	}
 }
 
 export default MeteoInfoBig

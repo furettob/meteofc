@@ -85,6 +85,7 @@ $color-violet: #9b59b6;
 .fb-divider {
   background-color: rgba(247,248,250,0.18);
   height: 2px;
+  border: none;
   &__small {
     height: 1px;
   }
@@ -95,6 +96,15 @@ $color-violet: #9b59b6;
   height: 2px;
   &__small {
     height: 1px;
+  }
+}
+
+.fb-map-side {
+  & .map-element {
+    display:none;
+  }
+  &__ready .map-element {
+    display:block;
   }
 }
 

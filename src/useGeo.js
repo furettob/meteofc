@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-/*
-  //const [count, setCount] = useState(0);
-
-  //const prevCountRef = useRef();
-  useEffect(() => {
-    prevCountRef.current = count;
-  });
-  const prevCount = prevCountRef.current;
-
-  return <h1>Now: {count}, before: {prevCount}</h1>;
-  */
+const getGeolocationProperty = (geoObject, propertyName) => {
+  if (!geoObject) {
+    return undefined
+  }
+  return isNaN(parseFloat(geoObject[propertyName])) ?
+                  undefined :
+                  parseFloat(geoObject[propertyName]).toFixed(4)
+}
 
 const useGeolocation = () => {
   const [state, setState] = useState({
@@ -40,24 +37,15 @@ const useGeolocation = () => {
         console.log("no stored position: returning true")
         return true
       }
-      const storedLatitude = isNaN(parseFloat(stored.latitude)) ?
-                  undefined :
-                  parseFloat(stored.latitude).toFixed(4)
-      const storedLongitude = isNaN(parseFloat(stored.longitude)) ?
-                  undefined :
-                  parseFloat(stored.longitude).toFixed(4)
-      const latitude = isNaN(parseFloat(received.latitude)) ?
-                  undefined :
-                  parseFloat(received.latitude).toFixed(4)
-      const longitude = isNaN(parseFloat(received.longitude)) ?
-                  undefined :
-                  parseFloat(received.longitude).toFixed(4)
+      const storedLatitude = getGeolocationProperty(stored, "latitude")
+      const storedLongitude = getGeolocationProperty(stored, "longitude")        
+      const latitude = getGeolocationProperty(received, "latitude")
+      const longitude =  getGeolocationProperty(received, "longitude")
 
       if (
           latitude && longitude &&
           (storedLatitude !== latitude || storedLongitude !== longitude)
       ) {
-        console.log("STORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
         console.log("significant change: returning true")
         return true
       }
@@ -70,9 +58,23 @@ const useGeolocation = () => {
   }
 
   const onEvent = event => {
+
+    console.log("GEO EVENT: ", event )
     if (mounted) {
 
       if (checkSignificantPositionChange(refToPrevPos.current, event.coords)) {
+
+        const stored = refToPrevPos.current
+        const received = event.coords
+        if (stored && received) {
+          const storedLatitude = getGeolocationProperty(stored, "latitude")
+          const storedLongitude = getGeolocationProperty(stored, "longitude")        
+          const latitude = getGeolocationProperty(received, "latitude")
+          const longitude =  getGeolocationProperty(received, "longitude")
+
+          console.log("STORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
+        }
+        
         refToPrevPos.current = event.coords;
 
         setState({
@@ -89,10 +91,17 @@ const useGeolocation = () => {
     }
   };
 
+  const onError = error => {
+    console.log("GEO ERROR: ", error )
+    setState({
+      error: error
+    });
+  };
+
   useEffect(
     () => {
-      navigator.geolocation.getCurrentPosition(onEvent);
-      watchId = navigator.geolocation.watchPosition(onEvent);
+      navigator.geolocation.getCurrentPosition(onEvent, onError);
+      watchId = navigator.geolocation.watchPosition(onEvent, onError);
 
       return () => {
         mounted = false;

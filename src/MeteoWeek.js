@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import axios from 'axios'
-import {getMeteoForecast, checkSignificantPositionChange} from './utils/utils'
+import {getMeteoForecast, checkSignificantMeteoPositionChange} from './utils/utils'
 import MeteoInfoBig from './MeteoInfoBig'
 import MeteoInfoSmall from './MeteoInfoSmall'
-import Address from './AddressFunctional'
+import Address from './Address'
 import Divider from './Divider'
 
 const INITIAL_STATE = {
-	selectedIndex: 0,
-	geolocation: undefined
+	selectedIndex: 0
 }
 
 class MeteoWeek extends Component {
@@ -18,14 +17,24 @@ class MeteoWeek extends Component {
 	}
 
 	componentDidUpdate = async () => {
-		const check = checkSignificantPositionChange(this.state, this.props)
+		// Check Geolocation availability
+		if (this.props.geolocation.error && !this.state.error) {
+			console.log("Generic error with geolocation UPDATE")
+				const msg = this.props.geolocation.error.message || "Generic error with geolocation."
+		    	this.setState({error:   msg + ". Check if all permissions to geo location are active."})
+		}
 
-		if ( check.significant ) {
+		// The tolerance for meteo is clearly broader than the one for geolocation change
+		// TODO add timestamp managing for requests
+		const stateGeolocation = this.state ? this.state.geolocation : undefined
+		const check = checkSignificantMeteoPositionChange(stateGeolocation, this.props.geolocation)
+		if ( check === true ) {
 		    try {
-		    	const weatherbitReturn = await getMeteoForecast(check)
-				this.setState({meteoForecast: weatherbitReturn, geolocation:this.props.geolocation})
+		    	const weatherbitReturn = await getMeteoForecast(this.props.geolocation)
+				this.setState({meteoForecast: weatherbitReturn, geolocation:this.props.geolocation, error:null})
 		    } catch(e) {
-		    	// Gestione errore
+		    	const msg = e.message || "Generic error with weatherbit"
+		    	this.setState({error: "An error occurred with weatherbit API:" + msg})
 		    }  
 		}
 	}
@@ -36,8 +45,13 @@ class MeteoWeek extends Component {
 	}
 
 	render() {
-		if (!this.state.meteoForecast || !this.props.address) {
-			return <div>Loading...</div>
+		if (!this.state.error && (!this.state.meteoForecast || !this.props.address)) {
+			return <div className="fb-loader">Loading...</div>
+		}
+		if (this.state.error) {
+			return 	<div class="fb-error">
+					<p>{this.state.error}</p>
+					</div>
 		}
 
 		return (
@@ -47,7 +61,11 @@ class MeteoWeek extends Component {
 				<Divider />
 				<div className={"fb-meteo-info-list"}>
 					{this.state.meteoForecast.data.data.slice(0,7).map(
-						(elem, index) => { return <MeteoInfoSmall key={"k-" + index} index={index} data={elem} selected={index === this.state.selectedIndex} onClickHandler={ (i) => { this.meteoInfoSmallClicked(i) }}/> }
+						(elem, index) => { return (<MeteoInfoSmall
+							key={"k-" + index}
+							index={index} data={elem}
+							selected={index === this.state.selectedIndex}
+							onClickHandler={ (i) => { this.meteoInfoSmallClicked(i) }}/> )}
 					)}
 				</div>
 			</div>

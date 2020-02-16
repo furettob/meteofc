@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 
+const INITIAL_STATE = {
+	flipped: false
+}
 
 class Flipcard extends Component {
-
-	INITIAL_STATE = {
-		flipped: false
-	}
 
 	constructor(props) {
 		super(props)
@@ -16,8 +15,8 @@ class Flipcard extends Component {
 		this.setState({flipped: !this.state.flipped})
 	}
 
-	getButtonText = () => {
-		return this.props.buttonText && this.props.buttonText[0] ? this.props.buttonText[0] :
+	getButtonText = (index) => {
+		return this.props.buttonText && this.props.buttonText[index] ? this.props.buttonText[index] :
 				this.props.defaultButtonText || "Flip"
 	}
 

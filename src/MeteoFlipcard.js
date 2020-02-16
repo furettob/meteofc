@@ -1,7 +1,7 @@
 import React from 'react';
 import Flipcard from './Flipcard';
 import MeteoWeek from './MeteoWeek';
-import MapComponent from './MapComponent';
+import MapSide from './MapSide';
 
 import useGeolocationStatus from './useGeo'
 import useAddressStatus from './useAddressStatus'
@@ -13,7 +13,7 @@ function MeteoFlipcard() {
 	return (
 	    <Flipcard classNames=" fb-meteo " buttonText={["See map", "Check meteo"]}>
       		<MeteoWeek geolocation={geolocation} address={address}/>	
-      		<MapComponent geolocation={geolocation}/>
+      		<MapSide geolocation={geolocation} address={address}/>
       	</Flipcard>
 	);
 }

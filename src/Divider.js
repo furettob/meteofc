@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
 
-class Divider extends Component {
-
-	render() {
-		return (
-			/* I know <hr/> exists, but a div has more properties */
-			<div className={"fb-divider " + (this.props.classNames || "")}></div>
-		)
-	}
+const Divider = (props) => {
+	return (
+		<hr className={"fb-divider " + (props.classNames || "")}/>
+	)
 }
 
 export default Divider

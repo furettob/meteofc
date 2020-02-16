@@ -1,33 +1,12 @@
 import React, {Component} from 'react';
-import axios from 'axios'
-import {getReverseGeocodeAddress, checkSignificantPositionChange} from './utils/utils'
-import MeteoInfoBig from './MeteoInfoBig'
-import MeteoInfoSmall from './MeteoInfoSmall'
 
-const INITIAL_STATE = {
-	address: "",
-	geolocation: undefined
-}
+const Address = (props) => {
 
-class Address extends Component {
-	constructor(props) {
-		super(props)
-		this.state = { ...INITIAL_STATE }
-	}
+	console.log("PROPS: ", props)
 
-	componentDidUpdate = async () => {
-		const check = checkSignificantPositionChange(this.state, this.props)
-
-		if ( check.significant ) {
-		    let getAddressReturn = await getReverseGeocodeAddress(check)
-		    console.log("getAddressReturn: \n", JSON.stringify(getAddressReturn))
-			this.setState({address: getAddressReturn, geolocation:this.props.geolocation})
-		}
-	}
-
-	getCity = () => {
+	const getCity = () => {
 		try {
-			return this.state.address.data.results[0].components.city
+			return props.address.data.results[0].components.city
 		} catch (e) {
 			console.log("error retrieving city: ", e)
 			return undefined
@@ -35,9 +14,9 @@ class Address extends Component {
 		return undefined
 	}
 
-	getAddress = () => {
+	const getAddress = () => {
 		try {
-			return this.state.address.data.results[0].formatted.split(",")[0]
+			return props.address.data.results[0].formatted.split(",")[0]
 		} catch (e) {
 			console.log("error retrieving address: ", e)
 			return undefined
@@ -45,14 +24,26 @@ class Address extends Component {
 		return undefined
 	}
 
-	render() {
-		return (
-			<span className={"fb-address " + (this.props.classNames || "")}>
-				<img src="./img/pin.svg"/>
-				<span class="fb-address--description fb-pl-8 fb-fs-r32">{this.getCity()} - {this.getAddress()}</span>
-			</span>
-		)
+	const getAddressDescription = () => {
+		if (getCity() && getAddress()) {
+			return getCity() + " - " + getAddress()
+		}
+		if (getCity()) {
+			return getCity()
+		}
+		if (getAddress()) {
+			return getAddress()
+		}
+		return "No position available"
 	}
+
+	return (
+		<span className={"fb-address " + (props.classNames || "")}>
+			<img src="./img/pin.svg"/>
+			<span className="fb-address--description fb-pl-8 fb-fs-r32">{getAddressDescription()}</span>
+		</span>
+	)
+
 }
 
 export default Address

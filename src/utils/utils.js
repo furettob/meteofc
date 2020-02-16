@@ -10,82 +10,48 @@ export const getMeteoForecast = async (geolocation) => {
   const simulateAsync = async () => {        
     const delay = ms => new Promise(res => setTimeout(res, ms))
     await delay(1000)
+    console.log("Returning: " + staticData)
     return staticData
   }
 
-  let url = "https://api.weatherbit.io/v2.0/forecast/daily" + 
-            "?lat=" + geolocation.latitude +
-            "&lon=" + geolocation.longitude +
-            "&lang=" + config.language +
-            "&key=" + config.weatherbit_api_key
+  const url =
+  `https://api.weatherbit.io/v2.0/forecast/daily?lat=${geolocation.latitude}&lon=${geolocation.longitude}&lang=${config.language}&key=${config.weatherbit_api_key}`
 
   const weatherbitParams = {
       method: "get",
       url: url
   }
 
-  // let weatherbitReturn = await axios(weatherbitParams)
+  console.log("I'd ask for url:" + url)
+
+  // Uncomment following lines to use real API from weatherbit
+  //let weatherbitReturn = await axios(weatherbitParams)
   // TODO clean data before sending
-  // return weatherbitReturn
+  //return weatherbitReturn
 
-  async function fakeWeatherbitData() {
-    console.log("fakeWeatherbitData")
-    let weatherbitReturn = await simulateAsync()
-    return weatherbitReturn
-  }
-  return await fakeWeatherbitData()
+  // Uncomment following lines to use mock static data
+
+    async function fakeWeatherbitData() {
+      console.log("fakeWeatherbitData")
+      let weatherbitReturn = await simulateAsync()
+      return weatherbitReturn
+    }
+    return await fakeWeatherbitData()
+  
 }
-
 
 export const getReverseGeocodeAddress = async (geolocation) => {
 
-    let url = "https://api.opencagedata.com/geocode/v1/json" + 
-                "?key=" + config.reverseGeocodeApikey +
-                "&q=" + encodeURIComponent(geolocation.latitude + ',' + geolocation.longitude) +
-                "&lang=it"
+    const url =
+    `https://api.opencagedata.com/geocode/v1/json?key=${config.reverseGeocodeApikey}&q=${encodeURIComponent(geolocation.latitude + ',' + geolocation.longitude)}&lang=it`
 
     const reverseGeocodeParams = {
         method: "get",
         url: url
     }
 
-    let reverseGeocodeReturn = await axios(reverseGeocodeParams)
+    const reverseGeocodeReturn = await axios(reverseGeocodeParams)
     return reverseGeocodeReturn
-}
-
-
-export const checkSignificantPositionChange = (prev, current) => {
-  const prevLatitude = prev.geolocation ?
-            isNaN(parseFloat(prev.geolocation.latitude)) ?
-              undefined :
-              parseFloat(prev.geolocation.latitude).toFixed(4)
-            : undefined
-  const prevLongitude = prev.geolocation ?
-            isNaN(parseFloat(prev.geolocation.longitude)) ?
-              undefined :
-              parseFloat(prev.geolocation.longitude).toFixed(4)
-            : undefined
-
-  const latitude = current.geolocation ?
-            isNaN(parseFloat(current.geolocation.latitude)) ?
-              undefined :
-              parseFloat(current.geolocation.latitude).toFixed(4)
-            : undefined
-  const longitude = current.geolocation ?
-            isNaN(parseFloat(current.geolocation.longitude)) ?
-              undefined :
-              parseFloat(current.geolocation.longitude).toFixed(4)
-            : undefined
-
-  if (
-      latitude && longitude &&
-      (prevLatitude !== latitude || prevLongitude !== longitude)
-  ) {
-    console.log("PREV: " + prevLatitude + " - " + prevLongitude + "\nTHIS: " + latitude + " - " + longitude)
-    return {latitude:latitude, longitude: longitude, significant:true}
-  }
-
-  return {significant:false}
 }
 
 export const getMeteoIconFilename = (code) => {
@@ -129,6 +95,53 @@ export const getMeteoIconFilename = (code) => {
   return "default.svg"
 }
 
+const getGeolocationProperty = (geoObject, propertyName) => {
+  if (!geoObject) {
+    return undefined
+  }
+  return isNaN(parseFloat(geoObject[propertyName])) ?
+                  undefined :
+                  parseFloat(geoObject[propertyName]).toFixed(4)
+}
+
+export const checkSignificantMeteoPositionChange = (stored, received) => {
+  const storedLatitude = getGeolocationProperty(stored, "latitude")
+  const storedLongitude = getGeolocationProperty(stored, "longitude")        
+  const latitude = getGeolocationProperty(received, "latitude")
+  const longitude =  getGeolocationProperty(received, "longitude")
+
+  try {
+      if (!received) {
+        console.log("Meteoweek no new received position: returning false")
+        return false
+      }
+      if (!stored) {
+        console.log("Meteoweek no stored position: returning true")
+        return true
+      }
+      const storedLatitude = getGeolocationProperty(stored, "latitude")
+      const storedLongitude = getGeolocationProperty(stored, "longitude")        
+      const latitude = getGeolocationProperty(received, "latitude")
+      const longitude =  getGeolocationProperty(received, "longitude")
+
+      if (
+          latitude && longitude &&
+          (storedLatitude !== latitude || storedLongitude !== longitude)
+      ) {
+        console.log("Meteoweek significant change: returning true")
+        console.log("Meteoweek STORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
+        return true
+      } else {
+        console.log("Meteoweek ELSE---")
+        console.log("Meteoweek STORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
+      }
+  } catch (e) {
+    console.log("Meteoweek Error: returning true ", e)
+    return true
+  }
+  console.log("Meteoweek no significant change: returning false")
+  return false
+}
 
 
 

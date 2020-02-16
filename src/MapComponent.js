@@ -9,51 +9,30 @@ import {checkSignificantPositionChange} from './utils/utils'
 const MapComponent = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=" + config.gm_api_key + "&v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: `240px` }} />,
-    containerElement: <div style={{ height: `240px` }} />,
-    mapElement: <div className="map-element" style={{ height: `100%` }} />,
+    loadingElement: <div style={{ height: `240px`}} />,
+    containerElement: <div style={{}} />,
+    mapElement: <div className="map-element" style={{ height: `240px` }} />,
   }),
   withScriptjs,
   withGoogleMap
 )( (props) => {
     const geolocation = useGeolocation()
     const allProps = Object.assign({}, {...props}, {geolocation})
-    return <GoogleMapComponent className="fb-map" {...allProps}/>
+    return <GoogleMapComponent {...allProps}/>
   }
 )
 
-const INITIAL_STATE = {
-  selectedIndex: 0,
-  geolocation: undefined
-}
+const GoogleMapComponent = (props) => {
 
-class GoogleMapComponent extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { ...INITIAL_STATE }
-  }
-
-  getCenter = () => {
-    if (!this.props.geolocation) {
+  const getCenter = () => {
+    if (!props.geolocation || !props.geolocation.latitude || !props.geolocation.longitude) {
       return undefined
     }
-    return { lat: this.props.geolocation.latitude, lng: this.props.geolocation.longitude };
+    return { lat: props.geolocation.latitude, lng: props.geolocation.longitude };
   }
 
-  componentDidUpdate = async (prevProps) => {
-    const check = checkSignificantPositionChange(this.state, this.props)
-
-    if ( check.significant ) {
-        this.setState({center:this.getCenter(), geolocation:this.props.geolocation})
-    }
-  }
-
-  render() {
-    if (!this.state || !this.state.center) {
-      return <div>No geolocation yet ...</div>
-    }
-
-    return <GoogleMap
+  return <div >
+    <GoogleMap
       defaultOptions={{
         minZoom: 14,
         maxZoom: 14,
@@ -64,14 +43,14 @@ class GoogleMapComponent extends Component {
         mapTypeControl: false
       }}
       defaultZoom={14}
-      defaultCenter={ this.state.center }
-      center={ this.getCenter()}
+      defaultCenter={ getCenter() }
+      center={ getCenter()}
       >
       <Marker className={"ft_gm "}
-              position={ this.state.center }
+              position={ getCenter() }
       />
     </GoogleMap>
-  }
+  </div>
 }
 
 export default MapComponent
