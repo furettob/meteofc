@@ -21,8 +21,12 @@ class MeteoWeek extends Component {
 		const check = checkSignificantPositionChange(this.state, this.props)
 
 		if ( check.significant ) {
-		    let weatherbitReturn = await getMeteoForecast(check)
-			this.setState({meteoForecast: weatherbitReturn, geolocation:this.props.geolocation})
+		    try {
+		    	const weatherbitReturn = await getMeteoForecast(check)
+				this.setState({meteoForecast: weatherbitReturn, geolocation:this.props.geolocation})
+		    } catch(e) {
+		    	// Gestione errore
+		    }  
 		}
 	}
 
