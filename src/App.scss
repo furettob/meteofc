@@ -12,7 +12,7 @@ $color-violet: #9b59b6;
 
 .card-wrapper {
   position: relative;
-  min-height: 480px;
+  min-height: 544px;
   perspective: 200vmin;
 }
 
@@ -55,14 +55,8 @@ $color-violet: #9b59b6;
   }
   &--back {
     transform: rotateY(180deg);
-    & .fb-map {
-      display: none;
-    }
     &--flip {
       transform: rotateY(0);
-      & .fb-map {
-        display: block;
-      }
     }
   }
 }
@@ -79,6 +73,92 @@ $color-violet: #9b59b6;
     grid-column-end: auto;
     grid-row-start: auto;
     grid-row-end: auto;
+    border-radius: 8px;
+    border: none;
+    transition: background-color .4s ease-in;
+    background-color: rgba(247,248,250,0);
+    &:hover {
+      background-color: rgba(247,248,250,0.18);
+    }
+    &.selected {
+      background-color: rgba(247,248,250,0.18);
+      border: 1px solid #C69887;
+    } 
+    & p {
+      margin: 8px 0;
+    }
+  }
+  & &-info--big {
+    padding-top: 8px;
+    & img {
+      width: 16%;
+      min-width: 96px;
+    }
+    & h2 {
+      font-weight: normal;
+      font-size: 40px;
+      margin: 8px 0;
+    }
+  }
+}
+@media screen and (max-width: 576px) {
+  .fb-meteo {
+    & .fb-meteo-info-item {
+      & p {
+        font-size: 12px;
+      }
+    }
+    & img {
+      max-width: 70%; 
+    }
+  }
+}
+
+/* here we pass from columns to rows */
+@media screen and (max-width: 500px) {
+  .card-wrapper {
+    min-height: 680px;
+  }
+  .fb-meteo {
+    & .fb-meteo-info-list {
+      grid-template-columns: repeat(1, 100%);
+      grid-gap: 8px;
+    }
+    & .fb-meteo-info-item {
+      grid-column-start: auto;
+      grid-column-end: auto;
+      grid-row-start: auto;
+      grid-row-end: auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 0;
+      &:not(:last-child) {
+        border-bottom: 2px solid rgba(247,248,250,0.18);
+      }
+      & p {
+        margin: 8px 0;
+        padding: 0 16px;
+        text-align: left;
+        &.fb-meteo-info--small__temp {
+          text-align: right;
+        }
+      }
+      & img {
+        width: 32px;
+      }
+    }
+    & &-info--big {
+      padding-top: 8px;
+      & img {
+        width: 16%;
+        min-width: 96px;
+      }
+      & h2 {
+        font-weight: normal;
+        font-size: 40px;
+        margin: 8px 0;
+      }
+    }
   }
 }
 
@@ -108,6 +188,33 @@ $color-violet: #9b59b6;
   }
 }
 
+.fb-button {
+  padding: 16px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: lighter;
+  border-radius: 8px;
+  transition: background-color .4s ease-in;
+  background-color: rgba(247,248,250,0);
+  &:hover {
+    background-color: rgba(247,248,250,0.18);
+  }
+  &__main {
+    padding: 16px 40px;
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-size: 24px;
+  }
+}
+
+.fb-error {
+  margin: 24px auto;
+}
+
 /************************************************************************/
 /* DESIGN SYSTEM
 /************************************************************************/
@@ -122,7 +229,7 @@ body {
 .fb-section {
   margin: 0;
   width: 100%;
-  padding: 40px;
+  padding: 40px 0;
   box-sizing: border-box;
 }
 .fb-content {

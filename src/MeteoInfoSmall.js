@@ -74,9 +74,15 @@ const MeteoInfoSmall = (props) => {
 
 	return (
 			<div className={"fb-meteo-info-item fb-meteo-info--small " + getSelectedClass()} onClick={ () => { props.onClickHandler(props.index, "ciao") }}>
-				<p>{getMeteoDay()}</p>
-				<img className="fb-meteo-info--small__icon" src={"./img/"+getMeteoIconFilename(getMeteoCode())}/>
-				<p>{getMeteoMinTemp()} - {getMeteoMaxTemp()}</p>
+				<div>
+					<p>{getMeteoDay()}</p>
+				</div>
+				<div>
+					<img className="fb-meteo-info--small__icon" src={"./img/"+getMeteoIconFilename(getMeteoCode())}/>
+				</div>
+				<div>
+					<p className="fb-meteo-info--small__temp">{getMeteoMinTemp()} - {getMeteoMaxTemp()}</p>
+				</div>
 			</div>
 		)
 }

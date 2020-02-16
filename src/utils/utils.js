@@ -25,18 +25,19 @@ export const getMeteoForecast = async (geolocation) => {
   console.log("I'd ask for url:" + url)
 
   // Uncomment following lines to use real API from weatherbit
-  //let weatherbitReturn = await axios(weatherbitParams)
+  let weatherbitReturn = await axios(weatherbitParams)
   // TODO clean data before sending
-  //return weatherbitReturn
+  return weatherbitReturn
 
   // Uncomment following lines to use mock static data
-
+  /*
     async function fakeWeatherbitData() {
       console.log("fakeWeatherbitData")
       let weatherbitReturn = await simulateAsync()
       return weatherbitReturn
     }
     return await fakeWeatherbitData()
+  */
   
 }
 

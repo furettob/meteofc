@@ -17,6 +17,8 @@ class MeteoWeek extends Component {
 	}
 
 	componentDidUpdate = async () => {
+		console.log("MeteoWeek componentDidUpdate")
+
 		// Check Geolocation availability
 		if (this.props.geolocation.error && !this.state.error) {
 			console.log("Generic error with geolocation UPDATE")
@@ -36,7 +38,7 @@ class MeteoWeek extends Component {
 		    	const msg = e.message || "Generic error with weatherbit"
 		    	this.setState({error: "An error occurred with weatherbit API:" + msg})
 		    }  
-		}
+		} 
 	}
 
 	meteoInfoSmallClicked = (index) => {
@@ -49,7 +51,7 @@ class MeteoWeek extends Component {
 			return <div className="fb-loader">Loading...</div>
 		}
 		if (this.state.error) {
-			return 	<div class="fb-error">
+			return 	<div className="fb-error">
 					<p>{this.state.error}</p>
 					</div>
 		}
@@ -68,6 +70,7 @@ class MeteoWeek extends Component {
 							onClickHandler={ (i) => { this.meteoInfoSmallClicked(i) }}/> )}
 					)}
 				</div>
+				<Divider />
 			</div>
 		)
 	}

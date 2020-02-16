@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
+import FlipcardButton from './FlipcardButton'
 
 const INITIAL_STATE = {
-	flipped: false
+	flipped: false,
+	frontIndex: 0
 }
+
+/*
+	working with animation this can be generalized to a multi-sided card
+*/
 
 class Flipcard extends Component {
 
 	constructor(props) {
 		super(props)
-		this.state = {...this.INITIAL_STATE}
+		this.state = {...INITIAL_STATE}
 	}
 
 	flip = () => {
@@ -27,21 +33,21 @@ class Flipcard extends Component {
 
 			<div className="card-wrapper">
 				<div className={"card " + (this.props.classNames || "") }>
-					<div className={"card--side card--front " + frontFlipped}>
-					  <div className="side--content">
-					  	{this.props.children[0]}
-					  	<div className="button button__main" onClick={this.flip}>{this.getButtonText(0)}</div>
-					  </div>
-					  
-					</div>
-
-					<div className={"card--side card--back " + backFlipped}>
-					  <div className="side--content">
-					  	{this.props.children[1]}
-					  	<div className="button button__main" onClick={this.flip}>{this.getButtonText(1)}</div>
-					  </div>
-					  
-					</div>
+					{this.props.children.slice(0,2).map(
+						(elem, index) => {
+							const cardSideClasses = index === this.state.frontIndex ?
+								(" card--front " + frontFlipped) :
+								("card--back " + backFlipped)
+							return (
+								<div key={"k-"+index} className={"card--side " + cardSideClasses}>
+									<div className="side--content">
+								  		{elem}
+								  		<FlipcardButton onClickProp={this.flip} text={this.getButtonText(index)}/>
+									</div>
+								</div>
+							 )
+						}
+					)}
 				</div>
 			</div>
 		</div>
