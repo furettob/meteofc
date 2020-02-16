@@ -132,9 +132,10 @@ $color-violet: #9b59b6;
       grid-row-end: auto;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      border-radius: 0;
       grid-gap: 0;
       align-items: center;
-      &:not(:last-child) {
+      &:not(:last-child):not(.selected) {
         border-bottom: 2px solid rgba(247,248,250,0.18);
       }
       & p {
@@ -146,7 +147,8 @@ $color-violet: #9b59b6;
         }
       }
       & img {
-        width: 32px;
+        width: 24px;
+        vertical-align: sub;
       }
     }
     & &-info--big {
