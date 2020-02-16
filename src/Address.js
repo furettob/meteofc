@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react'
 
 const Address = (props) => {
-
-	console.log("PROPS: ", props)
 
 	const getCity = () => {
 		try {
@@ -11,7 +9,6 @@ const Address = (props) => {
 			// console.log("error retrieving city: ", e)
 			return undefined
 		}
-		return undefined
 	}
 
 	const getAddress = () => {
@@ -21,7 +18,6 @@ const Address = (props) => {
 			// console.log("error retrieving address: ", e)
 			return undefined
 		}
-		return undefined
 	}
 
 	const getAddressDescription = () => {
@@ -39,7 +35,7 @@ const Address = (props) => {
 
 	return (
 		<span className={"fb-address " + (props.classNames || "")}>
-			<img src="./img/pin.svg"/>
+			<img src="./img/pin.svg" alt="pin"/>
 			<span className="fb-address--description fb-pl-8">{getAddressDescription()}</span>
 		</span>
 	)

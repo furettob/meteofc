@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.scss';
-import MeteoFlipcard from './MeteoFlipcard';
+import React from 'react'
+import './App.scss'
+import MeteoFlipcard from './MeteoFlipcard'
 
 function App() {
 	return (
@@ -12,7 +12,7 @@ function App() {
 		      </div>
 			</div>
 	    </div>
-	);
+	)
 }
 
-export default App;
+export default App

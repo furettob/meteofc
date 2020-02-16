@@ -1,18 +1,16 @@
-import React, {Component} from 'react';
-import MapComponent from './MapComponent';
-import Address from './Address';
-import Divider from './Divider';
+import React from 'react'
+import MapComponent from './MapComponent'
+import Address from './Address'
+import Divider from './Divider'
 
 const MapSide = (props) => {
 
 	const isGeolocationReady = () => {
-		console.log("isGeolocationReadyClass", props.geolocation)
-		console.log("Returning: " + (props.geolocation && props.geolocation.latitude && props.geolocation.longitude))
+		// console.log("Returning: " + (props.geolocation && props.geolocation.latitude && props.geolocation.longitude))
 		return (props.geolocation && props.geolocation.latitude && props.geolocation.longitude)
 	}
 
 	const getCoordinates = () => {
-		console.log("getCoordinates")
 		if (props.geolocation && props.geolocation.latitude && props.geolocation.longitude) {
 			return "Lat: " + props.geolocation.latitude.toFixed(4) + " - Lon: "+ props.geolocation.longitude.toFixed(4)
 		}

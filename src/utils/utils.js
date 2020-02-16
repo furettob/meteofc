@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-
 import axios from 'axios'
 import staticData from "./staticdata.json"
 import config from './config.json'
@@ -26,37 +24,23 @@ export const getMeteoForecast = async (geolocation) => {
     console.log("getMeteoForecast asking for url:" + url)
 
     // Uncomment following lines to use real API from weatherbit
-    let weatherbitReturn = await axios(weatherbitParams)
+    // let weatherbitReturn = await axios(weatherbitParams)
     // TODO clean data before sending
-    return weatherbitReturn
+    //return weatherbitReturn
 
     // Uncomment following lines to use mock static data
-    /*
+    
       async function fakeWeatherbitData() {
         console.log("fakeWeatherbitData")
         let weatherbitReturn = await simulateAsync()
         return weatherbitReturn
       }
       return await fakeWeatherbitData()
-    */
+    
   } else {
     return undefined
   }
   
-}
-
-export const getReverseGeocodeAddress = async (geolocation) => {
-
-    const url =
-    `https://api.opencagedata.com/geocode/v1/json?key=${config.reverseGeocodeApikey}&q=${encodeURIComponent(geolocation.latitude + ',' + geolocation.longitude)}&lang=it`
-
-    const reverseGeocodeParams = {
-        method: "get",
-        url: url
-    }
-
-    const reverseGeocodeReturn = await axios(reverseGeocodeParams)
-    return reverseGeocodeReturn
 }
 
 export const getMeteoIconFilename = (code) => {
@@ -110,10 +94,6 @@ const getGeolocationProperty = (geoObject, propertyName) => {
 }
 
 export const checkSignificantMeteoPositionChange = (stored, received) => {
-  const storedLatitude = getGeolocationProperty(stored, "latitude")
-  const storedLongitude = getGeolocationProperty(stored, "longitude")        
-  const latitude = getGeolocationProperty(received, "latitude")
-  const longitude =  getGeolocationProperty(received, "longitude")
 
   try {
       if (!received) {

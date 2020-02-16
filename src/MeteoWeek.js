@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import axios from 'axios'
+import React, {Component} from 'react'
 import {getMeteoForecast, checkSignificantMeteoPositionChange} from './utils/utils'
 import MeteoInfoBig from './MeteoInfoBig'
 import MeteoInfoSmall from './MeteoInfoSmall'
@@ -17,13 +16,11 @@ class MeteoWeek extends Component {
 	}
 
 	componentDidUpdate = async () => {
-		console.log("MeteoWeek componentDidUpdate")
 
 		// Check Geolocation availability
 		if (this.props.geolocation.error && !this.state.error) {
-			console.log("Generic error with geolocation UPDATE")
-				const msg = this.props.geolocation.error.message || "Generic error with geolocation."
-		    	this.setState({error:   msg + ". Check if all permissions to geo location are active."})
+			const msg = this.props.geolocation.error.message || "Generic error with geolocation."
+		    this.setState({error:   msg + ". Check if all permissions to geo location are active."})
 		}
 
 		// The tolerance for meteo is clearly broader than the one for geolocation change
@@ -46,7 +43,6 @@ class MeteoWeek extends Component {
 	}
 
 	meteoInfoSmallClicked = (index) => {
-		console.log("selecting: " + index)
 		this.setState({selectedIndex:index})
 	}
 

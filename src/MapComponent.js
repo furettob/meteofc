@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps"
 import { Marker } from "react-google-maps"
 import useGeolocation from './useGeo'
 import config from "./utils/config.json"
-import {checkSignificantPositionChange} from './utils/utils'
 
 const MapComponent = compose(
   withProps({

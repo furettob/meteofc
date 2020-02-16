@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react'
 
 const getGeolocationProperty = (geoObject, propertyName) => {
   if (!geoObject) {
@@ -19,11 +19,11 @@ const useGeolocation = () => {
     longitude: null,
     speed: null,
     timestamp: Date.now()
-  });
-  const refToPrevPos = useRef();
+  })
+  const refToPrevPos = useRef()
 
-  let mounted = true;
-  let watchId;
+  let mounted = true
+  let watchId
 
   const checkSignificantPositionChange = (stored, received) => {
     console.log("checking new received position:")
@@ -59,7 +59,7 @@ const useGeolocation = () => {
 
   const onEvent = event => {
 
-    console.log("GEO EVENT: ", event )
+    // console.log("GEO EVENT: ", event )
     if (mounted) {
 
       if (checkSignificantPositionChange(refToPrevPos.current, event.coords)) {
@@ -75,7 +75,7 @@ const useGeolocation = () => {
           console.log("STORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
         }
         
-        refToPrevPos.current = event.coords;
+        refToPrevPos.current = event.coords
 
         setState({
           accuracy: event.coords.accuracy,
@@ -86,32 +86,32 @@ const useGeolocation = () => {
           longitude: event.coords.longitude,
           speed: event.coords.speed,
           timestamp: event.timestamp
-        });
+        })
       }
     }
-  };
+  }
 
   const onError = error => {
     console.log("GEO ERROR: ", error )
     setState({
       error: error
-    });
-  };
+    })
+  }
 
   useEffect(
     () => {
-      navigator.geolocation.getCurrentPosition(onEvent, onError);
-      watchId = navigator.geolocation.watchPosition(onEvent, onError);
+      navigator.geolocation.getCurrentPosition(onEvent, onError)
+      watchId = navigator.geolocation.watchPosition(onEvent, onError)
 
       return () => {
-        mounted = false;
-        navigator.geolocation.clearWatch(watchId);
-      };
+        mounted = false
+        navigator.geolocation.clearWatch(watchId)
+      }
     },
     [0]
-  );
+  )
 
-  return state;
-};
+  return state
+}
 
 export default useGeolocation

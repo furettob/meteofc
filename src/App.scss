@@ -135,6 +135,7 @@ $color-violet: #9b59b6;
       border-radius: 0;
       grid-gap: 0;
       align-items: center;
+      box-sizing: border-box;
       &:not(:last-child):not(.selected) {
         border-bottom: 2px solid rgba(247,248,250,0.18);
       }

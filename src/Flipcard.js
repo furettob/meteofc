@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import FlipcardButton from './FlipcardButton'
 
 const INITIAL_STATE = {
@@ -42,7 +42,7 @@ class Flipcard extends Component {
 								<div key={"k-"+index} className={"card--side " + cardSideClasses}>
 									<div className="side--content">
 								  		{elem}
-								  		<FlipcardButton onClickProp={this.flip} text={this.getButtonText(index)}/>
+								  		<FlipcardButton onClickHandler={this.flip} text={this.getButtonText(index)}/>
 									</div>
 								</div>
 							 )
@@ -54,4 +54,4 @@ class Flipcard extends Component {
 	}
 }
 
-export default Flipcard;
+export default Flipcard

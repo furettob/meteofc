@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import axios from 'axios'
+import React from 'react'
 import {getMeteoIconFilename} from './utils/utils'
 
 const MeteoInfoBig = (props) => {
@@ -11,7 +10,6 @@ const MeteoInfoBig = (props) => {
 			console.log("error retrieving meteoText: ", e)
 			return "---"
 		}
-		return "---"
 	}
 
 	const getMeteoCode = () => {
@@ -21,42 +19,38 @@ const MeteoInfoBig = (props) => {
 			console.log("error retrieving meteoCode: ", e)
 			return "---"
 		}
-		return undefined
 	}
 
 	const getMeteoTemp = () => {
 		try {
 			return props.data.temp + "°"
 		} catch (e) {
-			console.log("error retrieving meteoCode: ", e)
+			console.log("error retrieving meteoTemp: ", e)
 			return undefined
 		}
-		return undefined
 	}
 
 	const getMeteoApparentTemp = () => {
 		try {
 			return "Feels like: " + props.data.app_min_temp + "°"
 		} catch (e) {
-			console.log("error retrieving meteoCode: ", e)
+			console.log("error retrieving meteoApparentTemp: ", e)
 			return undefined
 		}
-		return undefined
 	}
 
 	const getMeteoHumidity = () => {
 		try {
 			return "Humidity: " + props.data.rh + "%"
 		} catch (e) {
-			console.log("error retrieving meteoCode: ", e)
+			console.log("error retrieving meteoHumidity: ", e)
 			return undefined
 		}
-		return undefined
 	}
 
 	return (
 			<div className="fb-meteo-info--big">
-				<img className="fb-meteo-info--big__icon" src={"./img/"+getMeteoIconFilename(getMeteoCode())}/>
+				<img className="fb-meteo-info--big__icon" src={"./img/"+getMeteoIconFilename(getMeteoCode())} alt="weather icon"/>
 				<h2>{getMeteoTemp()}</h2>
 				<p>
 					<span className="fb-ph-16">{getMeteoText()}</span>

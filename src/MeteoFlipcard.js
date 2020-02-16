@@ -1,7 +1,7 @@
-import React from 'react';
-import Flipcard from './Flipcard';
-import MeteoWeek from './MeteoWeek';
-import MapSide from './MapSide';
+import React from 'react'
+import Flipcard from './Flipcard'
+import MeteoWeek from './MeteoWeek'
+import MapSide from './MapSide'
 
 import useGeolocationStatus from './useGeo'
 import useAddressStatus from './useAddressStatus'
