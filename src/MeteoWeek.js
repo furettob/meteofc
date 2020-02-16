@@ -3,7 +3,7 @@ import axios from 'axios'
 import {getMeteoForecast, checkSignificantPositionChange} from './utils/utils'
 import MeteoInfoBig from './MeteoInfoBig'
 import MeteoInfoSmall from './MeteoInfoSmall'
-import Address from './Address'
+import Address from './AddressFunctional'
 import Divider from './Divider'
 
 const INITIAL_STATE = {
@@ -36,13 +36,13 @@ class MeteoWeek extends Component {
 	}
 
 	render() {
-		if (!this.state.meteoForecast) {
+		if (!this.state.meteoForecast || !this.props.address) {
 			return <div>Loading...</div>
 		}
 
 		return (
 			<div>
-				<Address geolocation={this.state.geolocation} />
+				<Address address={this.props.address} />
 				<MeteoInfoBig data={this.state.meteoForecast.data.data[this.state.selectedIndex]} />
 				<Divider />
 				<div className={"fb-meteo-info-list"}>

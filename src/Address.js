@@ -20,6 +20,7 @@ class Address extends Component {
 
 		if ( check.significant ) {
 		    let getAddressReturn = await getReverseGeocodeAddress(check)
+		    console.log("getAddressReturn: \n", JSON.stringify(getAddressReturn))
 			this.setState({address: getAddressReturn, geolocation:this.props.geolocation})
 		}
 	}

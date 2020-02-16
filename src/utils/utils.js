@@ -24,8 +24,9 @@ export const getMeteoForecast = async (geolocation) => {
       url: url
   }
 
-  let weatherbitReturn = await axios(weatherbitParams)
-  return weatherbitReturn
+  // let weatherbitReturn = await axios(weatherbitParams)
+  // TODO clean data before sending
+  // return weatherbitReturn
 
   async function fakeWeatherbitData() {
     console.log("fakeWeatherbitData")
