@@ -114,11 +114,10 @@ export const checkSignificantMeteoPositionChange = (stored, received) => {
           latitude && longitude &&
           (storedLatitude !== latitude || storedLongitude !== longitude)
       ) {
-        console.log("Meteoweek significant change: returning true")
-        console.log("Meteoweek if\nSTORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
+        console.log("Meteoweek significant change:\nSTORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
         return true
       } else {
-        console.log("Meteoweek else\nSTORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
+        //console.log("Meteoweek else\nSTORED: " + storedLatitude + " - " + storedLongitude + "\nRECEIVED: " + latitude + " - " + longitude)
       }
   } catch (e) {
     console.log("Meteoweek Error: returning true ", e)

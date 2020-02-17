@@ -27,7 +27,7 @@ const GoogleMapComponent = (props) => {
     if (!props.geolocation || !props.geolocation.latitude || !props.geolocation.longitude) {
       return undefined
     }
-    return { lat: props.geolocation.latitude, lng: props.geolocation.longitude };
+    return { lat: props.geolocation.latitude, lng: props.geolocation.longitude }
   }
 
   return <div >
