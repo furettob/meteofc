@@ -15,7 +15,7 @@ class MeteoWeek extends Component {
 		this.state = { ...INITIAL_STATE }
 	}
 
-	componentDidUpdate = () => {
+	componentDidUpdate = async () => {
 
 		// Check Geolocation availability
 		if (this.props.geolocation.error && !this.state.error) {
