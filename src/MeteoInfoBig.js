@@ -53,9 +53,9 @@ const MeteoInfoBig = (props) => {
 				<img className="fb-meteo-info--big__icon" src={"./img/"+getMeteoIconFilename(getMeteoCode())} alt="weather icon"/>
 				<h2>{getMeteoTemp()}</h2>
 				<p>
-					<span className="fb-ph-16">{getMeteoText()}</span>
-					<span className="fb-ph-16">{getMeteoApparentTemp()}</span>
-					<span className="fb-ph-16">{getMeteoHumidity()}</span>
+					<span className="fb-meteo-info--big__info fb-ph-16">{getMeteoText()}</span>
+					<span className="fb-meteo-info--big__info fb-ph-16">{getMeteoApparentTemp()}</span>
+					<span className="fb-meteo-info--big__info fb-ph-16">{getMeteoHumidity()}</span>
 				</p>
 			</div>
 		)

@@ -26,15 +26,15 @@ const useGeolocation = () => {
   let watchId
 
   const checkSignificantPositionChange = (stored, received) => {
-    console.log("checking new received position:")
+    //console.log("checking new received position:")
 
     try {
       if (!received) {
-        console.log("no new received position: returning false")
+        //console.log("no new received position: returning false")
         return false
       }
       if (!stored && getGeolocationProperty(received, "latitude") && getGeolocationProperty(received, "longitude")) {
-        console.log("no stored position and consistent received position: returning true")
+        //console.log("no stored position and consistent received position: returning true")
         return true
       }
       const storedLatitude = getGeolocationProperty(stored, "latitude")
@@ -53,7 +53,7 @@ const useGeolocation = () => {
       console.log("Error: returning true ", e)
       return true
     }
-    console.log("no significant change: returning false")
+    //console.log("no significant change: returning false")
     return false
   }
 

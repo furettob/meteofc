@@ -163,6 +163,9 @@ $color-violet: #9b59b6;
         font-size: 40px;
         margin: 8px 0;
       }
+      &__info {
+        white-space: nowrap;
+      }
     }
   }
 }
@@ -202,6 +205,7 @@ $color-violet: #9b59b6;
   border-radius: 8px;
   transition: background-color .4s ease-in;
   background-color: rgba(247,248,250,0);
+  max-width: 80%;
   &:hover {
     background-color: rgba(247,248,250,0.18);
   }
